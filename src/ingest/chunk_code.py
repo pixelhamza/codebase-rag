@@ -1,6 +1,9 @@
 import ast
 from dataclasses import dataclass
 from typing import Optional
+from pathlib import Path
+import sys, json
+from dataclasses import asdict
 
 @dataclass
 class CodeChunk:
@@ -77,13 +80,38 @@ class ChunkVisitor(ast.NodeVisitor):
         self.generic_visit(node);
 
 
-with open("scratch_test.py") as f:
-    text = f.read()
 
-tree = ast.parse(text)
-file_lines = text.splitlines()
-visitor = ChunkVisitor(file_lines, "scratch_test.py")
-visitor.visit(tree)   
+EXCLUDE_DIRS = {".git", "__pycache__", ".venv", "venv"}
 
-for chunk in visitor.chunks:
-    print(chunk)
+def chunk_repo(repo_root: Path) -> list[CodeChunk]:
+    all_chunks = []
+
+    for path in repo_root.rglob("*.py"):
+        if any(part in EXCLUDE_DIRS for part in path.parts):
+            continue
+
+        text = path.read_text(encoding="utf-8")
+        tree = ast.parse(text)
+
+        file_lines = text.splitlines()
+        relative_path = str(path.relative_to(repo_root))
+
+        visitor = ChunkVisitor(file_lines, relative_path)
+        visitor.visit(tree)
+
+        all_chunks.extend(visitor.chunks)
+
+    return all_chunks
+
+
+if __name__ == "__main__":
+    repo_root = Path(sys.argv[1])
+    output_path = Path(sys.argv[2])
+
+    chunks = chunk_repo(repo_root)
+
+    with open(output_path, "w") as f:
+        for chunk in chunks:
+            f.write(json.dumps(asdict(chunk)) + "\n")
+
+    print(f"Wrote {len(chunks)} chunks to {output_path}")
