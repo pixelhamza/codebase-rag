@@ -51,7 +51,6 @@ class ChunkVisitor(ast.NodeVisitor):
 
         self.chunks.append(chunk)
 
-        self.generic_visit(node);
 
 
     def visit_AsyncFunctionDef(self, node):
@@ -77,7 +76,6 @@ class ChunkVisitor(ast.NodeVisitor):
         
         self.chunks.append(chunk)
 
-        self.generic_visit(node);
 
 
 
