@@ -27,7 +27,7 @@ def build_bm25_index(chunks: list[dict]):
 
         texts.append(text)
 
-        tokenized_corpus = []
+    tokenized_corpus = []
 
     for text in texts:
         tokens = tokenize(text)
