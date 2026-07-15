@@ -21,6 +21,7 @@ data/chunks.jsonl
 data/qdrant/
 data/*.index
 data/bm25_index.pkl
+data/qdrant_db
 
 !data/eval/eval_set.jsonl
 
