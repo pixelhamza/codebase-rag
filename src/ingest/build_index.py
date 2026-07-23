@@ -53,11 +53,11 @@ def vector_indexing(chunks: list[dict]):
         collection_name="code_chunks",
         points=points,
     )
-    client.close()
 
 if __name__ == "__main__":
     chunks = load_chunks("data/chunks.jsonl")
     vector_indexing(chunks)
     print(f"Indexed {len(chunks)} chunks into Qdrant.")
+    client.close()
 
 

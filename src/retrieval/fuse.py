@@ -1,5 +1,5 @@
-from bm25_search import bm25_search
-from vector_search import vector_search
+from .bm25_search import bm25_search
+from .vector_search import vector_search
 
 RRF_K = 60
 def rrf(query :str ,top_k : int = 5): 
