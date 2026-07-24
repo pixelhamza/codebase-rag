@@ -2,9 +2,9 @@ from .bm25_search import bm25_search
 from .vector_search import vector_search
 
 RRF_K = 60
-def rrf(query :str ,top_k : int = 5): 
-    bm25_results = bm25_search(query,top_k = 10) #rrf needs a reasonale candidate pool i.e why 10
-    vector_results = vector_search(query, top_k=10)
+def rrf(repository,query :str ,top_k : int = 5): 
+    bm25_results = bm25_search(repository,query,top_k = 10) #rrf needs a reasonale candidate pool i.e why 10
+    vector_results = vector_search(repository,query, top_k=10)
 
     rrf_scores = {}
     chunk_lookup = { }

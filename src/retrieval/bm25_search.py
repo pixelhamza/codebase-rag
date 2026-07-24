@@ -4,18 +4,9 @@ import re
 def tokenize(text:str):
     return re.findall(r"[a-zA-Z0-9]+", text.lower())
 
-def load_bm25():
-    with open("data/bm25_index.pkl", "rb") as f:
-        return pickle.load(f)
-    
-data = load_bm25()
-bm25 = data["bm25"]
-chunks = data["chunks"]
-
-    
-def bm25_search(query:str,top_k: int = 5): 
+def bm25_search(repository,query:str,top_k: int = 5): 
     tokenized_query = tokenize(query)
-    scores = bm25.get_scores(tokenized_query)
+    scores = repository.get_scores(tokenized_query)
 
     indices = []
     for i in range(len(scores)):
@@ -27,7 +18,7 @@ def bm25_search(query:str,top_k: int = 5):
 
     results = []
     for index in top_indices:
-        chunk = chunks[index].copy()
+        chunk = repository.chunks[index].copy()
         chunk["score"] = scores[index]
         results.append(chunk)
     return results
