@@ -102,11 +102,14 @@ def chunk_repo(repo_root: Path) -> list[CodeChunk]:
     return all_chunks
 
 
-if __name__ == "__main__":
-    repo_root = Path(sys.argv[1])
-    output_path = Path(sys.argv[2])
+def build_chunks(repo_path: Path, repo_dir: Path):
+    """
+    Creates repo_dir/chunks.jsonl
+    """
 
-    chunks = chunk_repo(repo_root)
+    chunks = chunk_repo(repo_path)
+
+    output_path = repo_dir / "chunks.jsonl"
 
     with open(output_path, "w") as f:
         for chunk in chunks:
