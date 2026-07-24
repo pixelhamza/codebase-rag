@@ -30,3 +30,4 @@ data/qdrant_db
 .idea/
 
 data/issues.jsonl
+data/repos
