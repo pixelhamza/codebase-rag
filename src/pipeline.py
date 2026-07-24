@@ -6,7 +6,7 @@ from src.generation.llm import generate
 
 
 def answer(repository,query):
-    candidates = rrf(query, top_k=10)
+    candidates = rrf(repository,query, top_k=10)
     ranked = rerank(query, candidates, top_k=5)
 
     prompt = build_prompt(query, ranked)

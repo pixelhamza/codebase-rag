@@ -6,7 +6,7 @@ def tokenize(text:str):
 
 def bm25_search(repository,query:str,top_k: int = 5): 
     tokenized_query = tokenize(query)
-    scores = repository.get_scores(tokenized_query)
+    scores = repository.bm25.get_scores(tokenized_query)
 
     indices = []
     for i in range(len(scores)):

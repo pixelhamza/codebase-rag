@@ -3,7 +3,7 @@ from pathlib import Path
 
 from qdrant_client import QdrantClient
 
-from repository import Repository
+from .model import Repository
 
 
 def load_repository(repo_dir: Path):
