@@ -6,13 +6,16 @@ from src.generation.llm import generate
 
 
 def answer(query):
-    candidates = rrf(query, top_k=10)
-    ranked = rerank(query, candidates, top_k=5)
+    candidates = rrf(query)
+    ranked = rerank(query, candidates)
 
-    prompt = build_prompt(query, ranked)
+    top_chunks = ranked[:5]
+
+    prompt = build_prompt(query, top_chunks)
+
     response = generate(prompt)
 
     return {
         "answer": response,
-        "sources": ranked
+        "sources": top_chunks
     }
